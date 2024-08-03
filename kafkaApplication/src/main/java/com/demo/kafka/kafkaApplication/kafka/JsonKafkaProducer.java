@@ -1,8 +1,10 @@
 package com.demo.kafka.kafkaApplication.kafka;
 
 import com.demo.kafka.kafkaApplication.payload.User;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
@@ -11,6 +13,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class JsonKafkaProducer {
 
     @Value("${spring.kafka.topic-json.name}")
@@ -18,11 +21,8 @@ public class JsonKafkaProducer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonKafkaProducer.class);
 
-    private KafkaTemplate<String, String> kafkaTemplate;
-
-    public JsonKafkaProducer(KafkaTemplate<String,String> kafkaTemplate){
-        this.kafkaTemplate = kafkaTemplate;
-    }
+    @Autowired
+    private KafkaTemplate<String, User> kafkaTemplate;
 
     public void sendMessage(User data){
 
